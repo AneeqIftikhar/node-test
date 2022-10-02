@@ -83,7 +83,8 @@ export class MenuItemsService {
 
     for (let i = 0; i < menuitems.length; i++) {
         if(menuitems[i].parentId!=null) {
-            result[menuitems[i].parentId] = menuitems[i];
+            var index = String(menuitems[i].parentId)
+            //result[index] = menuitems[i];
         }
         else
         {

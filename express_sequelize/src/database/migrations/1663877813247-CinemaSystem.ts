@@ -1,5 +1,5 @@
-import { QueryInterface } from 'sequelize';
-
+import { literal, QueryInterface } from 'sequelize';
+import { ModelAttributes } from 'sequelize/types/model';
 export default {
   /**
    # ToDo: Create a migration that creates all tables for the following user stories
@@ -32,7 +32,37 @@ export default {
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   up: (queryInterface: QueryInterface): Promise<void> => {
-    throw new Error('TODO: implement migration in task 4');
+    return new Promise(function (resolve, reject) {
+      queryInterface.createTable('movies', {
+        id: {
+          type: 'integer',
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        name: { type: 'varchar' },
+        url: { type: 'varchar' },
+        parentId: {
+          type: 'integer',
+          allowNull: true,
+          references: {
+            model: {
+              tableName: 'menu_item',
+            },
+            key: 'id',
+          },
+          onDelete: 'cascade',
+        },
+        createdAt: {
+          type: 'timestamp',
+          defaultValue: literal('CURRENT_TIMESTAMP'),
+        },
+        updatedAt: {
+          type: 'timestamp',
+          defaultValue: literal('CURRENT_TIMESTAMP'),
+        },
+      } as ModelAttributes);
+    });
+    
   },
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
